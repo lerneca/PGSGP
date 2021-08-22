@@ -1,14 +1,10 @@
 # Google Play Games Services Plugin for Godot 
-This is an Android Play Games Services plugin for Godot Game Engine 3.2.3+. 
+This is an Android Play Games Services plugin for Godot Game Engine 3.3.x.
 
 [![Android](https://img.shields.io/badge/Platform-Android-brightgreen.svg)](https://developer.android.com)
-[![Godot](https://img.shields.io/badge/Godot%20Engine-3.2.3-blue.svg)](https://github.com/godotengine/godot/)
-[![PGS](https://img.shields.io/badge/Play%20Games%20Services-20.0.1-green.svg)](https://developers.google.com/games/services/android/quickstart)
+[![Godot](https://img.shields.io/badge/Godot%20Engine-3.3.3-blue.svg)](https://github.com/godotengine/godot/)
+[![PGS](https://img.shields.io/badge/Play%20Games%20Services-21.0.0-green.svg)](https://developers.google.com/games/services/android/quickstart)
 [![MIT license](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](https://lbesson.mit-license.org/)
-
-
-If you want to use the old plugin version visit [Old README file](https://github.com/cgisca/PGSGP/blob/master/README_OLD.md).
-
 
 ### Supported features:
 - Sign-in/Sign out
@@ -26,10 +22,10 @@ Before using this plugin please follow instructions on [Setting Up Google Play G
 - Move the plugin configuration file (`GodotPlayGamesServices.gdap`) and the binary (`GodotPlayGamesServices.release.aar`) downloaded from the previous step to the Godot project's res://android/plugins directory.
 - Enable plugin by accessing `Project` -> `Export`, Plugins section. Follow the [image](https://docs.godotengine.org/en/stable/_images/android_export_preset_plugins_section.png).
 - Go to res://android/build directory. Add below lines to `AndroidManifest.xml`:
-```xml	
+```xml
     <meta-data android:name="com.google.android.gms.games.APP_ID"
    	    android:value="@string/app_id" />
-   
+
    	<meta-data android:name="com.google.android.gms.version"
    	   android:value="@integer/google_play_services_version"/>
 ```
@@ -51,9 +47,9 @@ var play_games_services
 # Check if plugin was added to the project
 if Engine.has_singleton("GodotPlayGamesServices"):
   play_games_services = Engine.get_singleton("GodotPlayGamesServices")
-	
+
   # Initialize plugin by calling init method and passing to it a boolean to enable/disable displaying game pop-ups
-  
+
   var show_popups := true
   var request_email := true
   var request_profile := true
@@ -64,7 +60,7 @@ if Engine.has_singleton("GodotPlayGamesServices"):
 
   # For enabling saved games functionality use below initialization instead
   # play_games_services.initWithSavedGames(show_popups, "SavedGamesName", request_email, request_profile, request_token)
-  
+
   # Connect callbacks (Use only those that you need)
   play_games_services.connect("_on_sign_in_success", self, "_on_sign_in_success") # account_id: String
   play_games_services.connect("_on_sign_in_failed", self, "_on_sign_in_failed") # error_code: int
@@ -126,7 +122,7 @@ play_games_services.signOut()
 # Callbacks:
 func _on_sign_out_success():
 	pass
-  
+
 func _on_sign_out_failed():
 	pass
 ```
@@ -241,7 +237,7 @@ play_games_services.submitEvent("EVENT_ID", increment_by)
 # Callbacks:
 func _on_event_submitted(event_id: String):
 	pass
-	
+
 func _on_event_submitted_failed(event_id: String):
 	pass
 ```
@@ -261,10 +257,10 @@ func _on_events_loaded(events_array):
 	for event in available_events:
 		var event_id = event["id"] # you can get event id using 'id' key
 		var event_name = event["name"] # you can get event name using 'name' key
-		var event_desc = event["description"] # you can get event name using 'description' key 
+		var event_desc = event["description"] # you can get event name using 'description' key
 		var event_img = event["imgUrl"] # you can get event name using 'imgUrl' key
-		var event_value = event["value"] # you can get event name using 'value' key  
-	
+		var event_value = event["value"] # you can get event name using 'value' key
+
 # Triggered if there are no events:
 func _on_events_empty():
 	pass
@@ -279,7 +275,7 @@ func _on_events_loading_failed():
 var force_refresh := true # If true, this call will clear any locally cached data and attempt to fetch the latest data from the server.
 play_games_services.loadPlayerStats(force_refresh)
 
-# Callbacks:	
+# Callbacks:
 func _on_player_stats_loaded(stats):
 	var stats_dictionary: Dictionary = parse_json(stats)
 	# Using below keys you can retrieve data about a player’s in-game activity
@@ -297,7 +293,7 @@ func _on_player_stats_loading_failed():
 ```gdscript
 play_games_services.loadPlayerInfo()
 
-# Callbacks:	
+# Callbacks:
 func _on_player_info_loaded(info):
 	var info_dictionary: Dictionary = parse_json(info)
 	# Using below keys you can retrieve player’s info
@@ -307,13 +303,13 @@ func _on_player_info_loaded(info):
 	info_dictionary["player_id"]
 	info_dictionary["hi_res_image_url"]
 	info_dictionary["icon_image_url"]
-	info_dictionary["banner_image_landscape_url"] 
+	info_dictionary["banner_image_landscape_url"]
 	info_dictionary["banner_image_portrait_url"]
     # Also you can get level info for the player
     var level_info_dictionary = info_dictionary["level_info"]
 	level_info_dictionary["current_xp_total"]
 	level_info_dictionary["last_level_up_timestamp"]
-    
+
     var current_level_dictionary = level_info_dictionary["current_level"]
     current_level_dictionary["level_number"]
     current_level_dictionary["max_xp"]
@@ -323,7 +319,7 @@ func _on_player_info_loaded(info):
     next_level_dictionary["level_number"]
     next_level_dictionary["max_xp"]
     next_level_dictionary["min_xp"]
-    
+
 
 func _on_player_info_loading_failed():
 	pass
@@ -332,7 +328,7 @@ func _on_player_info_loading_failed():
 ##### Save game snapshot
 ```gdscript
 var data_to_save: Dictionary = {
-		"name": "John", 
+		"name": "John",
 		"age": 22,
 		"height": 1.82,
 		"is_gamer": true
@@ -342,7 +338,7 @@ play_games_services.saveSnapshot("SNAPSHOT_NAME", to_json(data_to_save), "DESCRI
 # Callbacks:
 func _on_game_saved_success():
 	pass
-	
+
 func _on_game_saved_fail():
 	pass
 ```
@@ -356,8 +352,8 @@ func _on_game_load_success(data):
 	var name = game_data["name"]
 	var age = game_data["age"]
 	#...
-	
-	
+
+
 func _on_game_load_fail():
 	pass
 ```
@@ -369,11 +365,11 @@ var max_saved_games_snapshots := 5
 var saved_games_screen_title := "TITLE"
 play_games_services.showSavedGames(saved_games_screen_title, allow_add_button, allow_delete_button, max_saved_games_snapshots)
 
-#Godot callback	
+#Godot callback
 # If user clicked on add new snapshot button on the screen with all saved snapshots, below callback will be triggered:
 func _on_create_new_snapshot(name):
 	var game_data_to_save: Dictionary = {
-		"name": "John", 
+		"name": "John",
 		"age": 22,
 		"height": 1.82,
 		"is_gamer": true
@@ -381,6 +377,14 @@ func _on_create_new_snapshot(name):
 	play_games_services.save_snapshot(name, to_json(game_data_to_save), "DESCRIPTION")
 
 ```
+## Development
+Download latest aar files for developing Godot Plugins for Android from https://godotengine.org/download and save them into godot-lib folder.
+
+To build new version of this plugin run
+```gradle
+./gradlew assemble
+```
+
 ## Troubleshooting
 Check `adb logcat` for debuging.
 To filter only Godot messages use next command:
