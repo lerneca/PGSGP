@@ -1,5 +1,8 @@
 # Changelog
 
+### 1.3.0
+Build for Godot 3.4
+
 ### 1.2.0
 Added posibility to enable/disable saved games functionality.
 Fixed bug in saved games functionality.
