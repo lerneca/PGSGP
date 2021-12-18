@@ -1,2 +1,2 @@
 configurations.maybeCreate("default")
-artifacts.add("default", file('godot-lib.3.4.stable.release.aar'))
+artifacts.add("default", file('godot-lib.3.4.1.stable.release.aar'))
