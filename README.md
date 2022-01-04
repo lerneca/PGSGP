@@ -21,3 +21,5 @@ This is an Android Play Games Services plugin for Godot Game Engine 3.4.2
 [https://github.com/StudioAdriatic/PGSGP/wiki](https://github.com/StudioAdriatic/PGSGP/wiki)
 
 
+### Credits
+This project is now maintained by [Studio Adriatic](https://studioadriatic.com) and originaly made by [cgisca](https://github.com/cgisca/PGSGP) and [oneseedfruit](https://github.com/oneseedfruit/PGSGP)
