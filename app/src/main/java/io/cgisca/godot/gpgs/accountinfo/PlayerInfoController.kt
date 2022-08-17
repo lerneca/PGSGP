@@ -47,11 +47,11 @@ class PlayerInfoController(
                             player.playerId,
                             player.displayName,
                             player.name,
-                            player.iconImageUrl,
-                            player.hiResImageUrl,
+                            player.iconImageUri?.toString(),
+                            player.hiResImageUri?.toString(),
                             player.title,
-                            player.bannerImageLandscapeUrl,
-                            player.bannerImagePortraitUrl,
+                            player.bannerImageLandscapeUri?.toString(),
+                            player.bannerImagePortraitUri?.toString(),
                             playerLevelInfo
                         )
                         playerInfoListener.onPlayerInfoLoaded(Gson().toJson(playerInfo))
