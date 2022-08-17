@@ -44,7 +44,7 @@ class SavedGamesController(
 
     private fun writeSnapshot(
         snapshot: Snapshot,
-        data: ByteArray?,
+        data: ByteArray,
         desc: String
     ) {
         snapshot.snapshotContents.writeBytes(data)
@@ -80,7 +80,7 @@ class SavedGamesController(
                 .addOnFailureListener {
                     savedGamesListener.onSavedGameFailed()
                 }
-                .continueWith<Pair<Snapshot, ByteArray>>(
+                .continueWith(
                     Continuation<DataOrConflict<Snapshot>, Pair<Snapshot, ByteArray>> { task ->
                         val snapshot = task.result
                         snapshot?.data?.let {

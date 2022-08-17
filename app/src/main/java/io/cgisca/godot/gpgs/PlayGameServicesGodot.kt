@@ -34,6 +34,7 @@ import org.godotengine.godot.plugin.SignalInfo
 import java.math.BigInteger
 import java.util.Random
 
+@Suppress("unused")
 class PlayGameServicesGodot(godot: Godot) : GodotPlugin(godot), AchievementsListener, EventsListener,
     LeaderBoardsListener, SavedGamesListener, SignInListener, PlayerStatsListener, PlayerInfoListener {
 
@@ -153,12 +154,14 @@ class PlayGameServicesGodot(godot: Godot) : GodotPlugin(godot), AchievementsList
     }
 
     override fun onMainActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == SignInController.RC_SIGN_IN) {
+        if (requestCode == SignInController.RC_SIGN_IN && data != null) {
             val googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
             signInController.onSignInActivityResult(googleSignInResult)
         } else if (requestCode == SavedGamesController.RC_SAVED_GAMES) {
             if (data != null) {
                 if (data.hasExtra(SnapshotsClient.EXTRA_SNAPSHOT_METADATA)) {
+                    // TODO: The method is deprecated on api level 33. Our min is 19. Fix the deprecation when min is >=33.
+                    @Suppress("DEPRECATION")
                     data.getParcelableExtra<SnapshotMetadata>(SnapshotsClient.EXTRA_SNAPSHOT_METADATA)?.let {
                         savedGamesController.loadSnapshot(it.uniqueName)
                     }

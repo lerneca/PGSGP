@@ -23,20 +23,20 @@ class PlayerInfoController(
                     val player = task.result
                     if (task.isSuccessful && player != null) {
                         val levelInfo = player.levelInfo
-                        val playerLevelInfo = if (levelInfo != null) {
+                        val playerLevelInfo = if (levelInfo !== null) {
                             PlayerLevelInfo(
                                 levelInfo.currentXpTotal,
                                 levelInfo.lastLevelUpTimestamp,
-                                if (levelInfo.currentLevel != null) PlayerLevel(
+                                PlayerLevel(
                                     levelInfo.currentLevel.levelNumber,
                                     levelInfo.currentLevel.minXp,
                                     levelInfo.currentLevel.maxXp
-                                ) else null,
-                                if (levelInfo.nextLevel != null) PlayerLevel(
+                                ),
+                                PlayerLevel(
                                     levelInfo.nextLevel.levelNumber,
                                     levelInfo.nextLevel.minXp,
                                     levelInfo.nextLevel.maxXp
-                                ) else null
+                                )
                             )
                         } else {
                             null
@@ -46,14 +46,13 @@ class PlayerInfoController(
                             player.playerId,
                             player.displayName,
                             player.name,
-                            player.iconImageUrl,
-                            player.hiResImageUrl,
+                            player.iconImageUri?.toString(),
+                            player.hiResImageUri?.toString(),
                             player.title,
-                            player.bannerImageLandscapeUrl,
-                            player.bannerImagePortraitUrl,
+                            player.bannerImageLandscapeUri?.toString(),
+                            player.bannerImagePortraitUri?.toString(),
                             playerLevelInfo
                         )
-
                         playerInfoListener.onPlayerInfoLoaded(Gson().toJson(playerInfo))
                     } else {
                         playerInfoListener.onPlayerInfoLoadingFailed()
