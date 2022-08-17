@@ -22,39 +22,7 @@ class PlayerInfoController(
                 .addOnCompleteListener { task ->
                     val player = task.result
                     if (task.isSuccessful && player != null) {
-                        val levelInfo = player.levelInfo
-                        val playerLevelInfo = if (levelInfo != null) {
-                            PlayerLevelInfo(
-                                levelInfo.currentXpTotal,
-                                levelInfo.lastLevelUpTimestamp,
-                                if (levelInfo.currentLevel != null) PlayerLevel(
-                                    levelInfo.currentLevel.levelNumber,
-                                    levelInfo.currentLevel.minXp,
-                                    levelInfo.currentLevel.maxXp
-                                ) else null,
-                                if (levelInfo.nextLevel != null) PlayerLevel(
-                                    levelInfo.nextLevel.levelNumber,
-                                    levelInfo.nextLevel.minXp,
-                                    levelInfo.nextLevel.maxXp
-                                ) else null
-                            )
-                        } else {
-                            null
-                        }
-
-                        val playerInfo = PlayerInfo(
-                            player.playerId,
-                            player.displayName,
-                            player.name,
-                            player.iconImageUrl,
-                            player.hiResImageUrl,
-                            player.title,
-                            player.bannerImageLandscapeUrl,
-                            player.bannerImagePortraitUrl,
-                            playerLevelInfo
-                        )
-
-                        playerInfoListener.onPlayerInfoLoaded(Gson().toJson(playerInfo))
+                        playerInfoListener.onPlayerInfoLoaded(Gson().toJson(player))
                     } else {
                         playerInfoListener.onPlayerInfoLoadingFailed()
                     }
