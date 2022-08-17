@@ -44,7 +44,7 @@ class SavedGamesController(
 
     private fun writeSnapshot(
         snapshot: Snapshot,
-        data: ByteArray?,
+        data: ByteArray,
         desc: String
     ) {
         snapshot.snapshotContents.writeBytes(data)
