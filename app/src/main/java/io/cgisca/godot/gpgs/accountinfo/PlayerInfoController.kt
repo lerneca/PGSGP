@@ -1,7 +1,6 @@
 package io.cgisca.godot.gpgs.accountinfo
 
 import android.app.Activity
-import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.games.Games
 import com.google.gson.Gson
