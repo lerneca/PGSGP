@@ -1,6 +1,7 @@
 package io.cgisca.godot.gpgs.accountinfo
 
 import android.app.Activity
+import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.games.Games
 import com.google.gson.Gson
@@ -22,7 +23,38 @@ class PlayerInfoController(
                 .addOnCompleteListener { task ->
                     val player = task.result
                     if (task.isSuccessful && player != null) {
-                        playerInfoListener.onPlayerInfoLoaded(Gson().toJson(player))
+                        val levelInfo = player.levelInfo
+                        val playerLevelInfo = if (levelInfo !== null) {
+                            PlayerLevelInfo(
+                                levelInfo.currentXpTotal,
+                                levelInfo.lastLevelUpTimestamp,
+                                PlayerLevel(
+                                    levelInfo.currentLevel.levelNumber,
+                                    levelInfo.currentLevel.minXp,
+                                    levelInfo.currentLevel.maxXp
+                                ),
+                                PlayerLevel(
+                                    levelInfo.nextLevel.levelNumber,
+                                    levelInfo.nextLevel.minXp,
+                                    levelInfo.nextLevel.maxXp
+                                )
+                            )
+                        } else {
+                            null
+                        }
+
+                        val playerInfo = PlayerInfo(
+                            player.playerId,
+                            player.displayName,
+                            player.name,
+                            player.iconImageUrl,
+                            player.hiResImageUrl,
+                            player.title,
+                            player.bannerImageLandscapeUrl,
+                            player.bannerImagePortraitUrl,
+                            playerLevelInfo
+                        )
+                        playerInfoListener.onPlayerInfoLoaded(Gson().toJson(playerInfo))
                     } else {
                         playerInfoListener.onPlayerInfoLoadingFailed()
                     }
