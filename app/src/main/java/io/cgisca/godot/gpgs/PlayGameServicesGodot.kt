@@ -159,6 +159,8 @@ class PlayGameServicesGodot(godot: Godot) : GodotPlugin(godot), AchievementsList
         } else if (requestCode == SavedGamesController.RC_SAVED_GAMES) {
             if (data != null) {
                 if (data.hasExtra(SnapshotsClient.EXTRA_SNAPSHOT_METADATA)) {
+                    // TODO: The method is deprecated on api level 33. Our min is 19. Fix the deprecation when min is >=33.
+                    @Suppress("DEPRECATION")
                     data.getParcelableExtra<SnapshotMetadata>(SnapshotsClient.EXTRA_SNAPSHOT_METADATA)?.let {
                         savedGamesController.loadSnapshot(it.uniqueName)
                     }
