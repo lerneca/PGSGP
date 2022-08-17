@@ -34,6 +34,7 @@ import org.godotengine.godot.plugin.SignalInfo
 import java.math.BigInteger
 import java.util.Random
 
+@Suppress("unused")
 class PlayGameServicesGodot(godot: Godot) : GodotPlugin(godot), AchievementsListener, EventsListener,
     LeaderBoardsListener, SavedGamesListener, SignInListener, PlayerStatsListener, PlayerInfoListener {
 
